@@ -39,21 +39,25 @@ public class HelloController {
 
     @FXML
     private void initialize() {
-        // Initially hide the text field, if the checkbox is not supposed to be checked by default.
-        nameT.managedProperty().bind(nameT.visibleProperty());
-        nameT.setVisible(nameC.isSelected());
+        setupCheckboxWithTextField(nameC, nameT);
+        setupCheckboxWithTextField(longC, longT);
+        setupCheckboxWithTextField(latC, latT);
+        setupCheckboxWithTextField(dateC, dateT);
+        setupCheckboxWithTextField(typeC, typeT);
+        setupCheckboxWithTextField(intenC, intenT);
+    }
 
-        // Add listener to the checkbox
-        nameC.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            nameT.setVisible(newValue);
+    private void setupCheckboxWithTextField(CheckBox checkBox, TextField textField) {
+        textField.managedProperty().bind(textField.visibleProperty());
+        textField.setVisible(checkBox.isSelected());
+        checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            textField.setVisible(newValue);
             if (newValue) {
-                // Checkbox is selected, add the text field to the container
-                if (!vbot.getChildren().contains(nameT)) {
-                    vbot.getChildren().add(nameT);
+                if (!vbot.getChildren().contains(textField)) {
+                    vbot.getChildren().add(textField);
                 }
             } else {
-                // Checkbox is deselected, remove the text field from the container
-                vbot.getChildren().remove(nameT);
+                vbot.getChildren().remove(textField);
             }
         });
     }
