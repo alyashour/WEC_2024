@@ -23,19 +23,25 @@ public class HelloController {
     @FXML
     private TableColumn<NaturalDisaster, String> nameColumn;
     @FXML
-    private TableColumn<NaturalDisaster, String> locationColumn;
+    private TableColumn<NaturalDisaster, Double> longcolumn;
     @FXML
-    private TableColumn<NaturalDisaster, Integer> dateColumn;
+    private TableColumn<NaturalDisaster, Double> latcolumn;
+    @FXML
+    private TableColumn<NaturalDisaster, String> dateColumn;
     @FXML
     private TableColumn<NaturalDisaster, Integer> intensityColumn;
+    @FXML
+    private TableColumn<NaturalDisaster, String> typecolumn;
 
     private ObservableList<NaturalDisaster> dataList = FXCollections.observableArrayList();
 
     public void initialize() throws FileNotFoundException {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        latcolumn.setCellValueFactory(new PropertyValueFactory<>("long"));
+        longcolumn.setCellValueFactory(new PropertyValueFactory<>("lat"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         intensityColumn.setCellValueFactory(new PropertyValueFactory<>("intensity"));
+        typecolumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 
         ArrayList<String[]> data = findData();
         ArrayList<NaturalDisaster> data_al = dataToArrayList(data);
