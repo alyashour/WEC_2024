@@ -1,36 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<VBox alignment="CENTER" prefHeight="593.0" prefWidth="634.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wec.wec_2024.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
-   <HBox prefHeight="26.0" prefWidth="192.0" translateX="-15.0" translateY="-60.0">
-      <children>
-         <Button mnemonicParsing="false" text="Refresh" />
-      </children>
-   </HBox>
-   <VBox fx:id="vtop" prefHeight="200.0" prefWidth="247.0" translateX="-15.0" translateY="-55.0">
-      <children>
-         <CheckBox fx:id="nameC" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Name" />
-         <CheckBox fx:id="longC" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Longitude" />
-         <CheckBox fx:id="latC" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Latitude" />
-         <CheckBox fx:id="dateC" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Date" />
-         <CheckBox fx:id="typeC" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Type" />
-         <CheckBox fx:id="intenC" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Intensity" />
-      </children>
-   </VBox>
-   <VBox fx:id="vbot" prefHeight="200.0" prefWidth="100.0">
-      <children>
-         <TextField fx:id="nameT" />
-         <TextField fx:id="longT" />
-         <TextField fx:id="latT" />
-         <TextField fx:id="dateT" />
-         <TextField fx:id="typeT" />
-         <TextField fx:id="intenT" />
-      </children>
-   </VBox>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="wec.wec_2024.HelloController">
+    <TextField fx:id="filterField" />
+    <TableView fx:id="tableView">
+        <columns>
+            <TableColumn fx:id="nameColumn" text="Name" />
+            <TableColumn fx:id="locationColumn" text="Location" />
+            <TableColumn fx:id="dateColumn" text="Date" />
+            <TableColumn fx:id="intensityColumn" text="Intensity" />
+        </columns>
+    </TableView>
 </VBox>

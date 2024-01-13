@@ -1,64 +1,64 @@
 package wec.wec_2024;
 
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class HelloController {
     @FXML
-    private VBox vtop;
+    private TextField filterField;
     @FXML
-    private VBox vbot;
+    private TableView<NaturalDisaster> tableView;
     @FXML
-    private CheckBox nameC;
+    private TableColumn<NaturalDisaster, String> nameColumn;
     @FXML
-    private CheckBox longC;
+    private TableColumn<NaturalDisaster, String> locationColumn;
     @FXML
-    private CheckBox latC;
+    private TableColumn<NaturalDisaster, Integer> dateColumn;
     @FXML
-    private CheckBox dateC;
-    @FXML
-    private CheckBox typeC;
-    @FXML
-    private CheckBox intenC;
+    private TableColumn<NaturalDisaster, Integer> intensityColumn;
 
-    @FXML
-    private TextField nameT;
-    @FXML
-    private TextField longT;
-    @FXML
-    private TextField latT;
-    @FXML
-    private TextField dateT;
-    @FXML
-    private TextField typeT;
-    @FXML
-    private TextField intenT;
+    private ObservableList<NaturalDisaster> dataList = FXCollections.observableArrayList();
 
-    @FXML
-    private void initialize() {
-        setupCheckboxWithTextField(nameC, nameT);
-        setupCheckboxWithTextField(longC, longT);
-        setupCheckboxWithTextField(latC, latT);
-        setupCheckboxWithTextField(dateC, dateT);
-        setupCheckboxWithTextField(typeC, typeT);
-        setupCheckboxWithTextField(intenC, intenT);
-    }
+    public void initialize() {
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        intensityColumn.setCellValueFactory(new PropertyValueFactory<>("intensity"));
 
-    private void setupCheckboxWithTextField(CheckBox checkBox, TextField textField) {
-        textField.managedProperty().bind(textField.visibleProperty());
-        textField.setVisible(checkBox.isSelected());
-        checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            textField.setVisible(newValue);
-            if (newValue) {
-                if (!vbot.getChildren().contains(textField)) {
-                    vbot.getChildren().add(textField);
+        dataList.addAll(
+                // Add your sample data here
+        );
+
+        FilteredList<NaturalDisaster> filteredData = new FilteredList<>(dataList, b -> true);
+
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(naturalDisaster -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
                 }
-            } else {
-                vbot.getChildren().remove(textField);
-            }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (naturalDisaster.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (naturalDisaster.getLocation().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (String.valueOf(naturalDisaster.getDate()).contains(lowerCaseFilter)) {
+                    return true;
+                } else {
+                    return String.valueOf(naturalDisaster.getIntensity()).contains(lowerCaseFilter);
+                }
+            });
         });
+
+        SortedList<NaturalDisaster> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
     }
 }
